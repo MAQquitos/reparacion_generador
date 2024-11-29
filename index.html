@@ -93,6 +93,25 @@
             background-color: #2980b9;
         }
 
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -114,7 +133,14 @@
             <p>Nos especializamos en la reparación de generadores eléctricos, garantizando calidad, rapidez y soluciones confiables. Completa el formulario a continuación y nuestro equipo experto se pondrá en contacto contigo para atender tus necesidades. ¡Estamos aquí para ayudarte!</p>
         </div>
 
-        <form class="contact-form">
+        <div id="alertSuccess" class="alert alert-success">
+            ¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.
+        </div>
+        <div id="alertError" class="alert alert-error">
+            Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.
+        </div>
+
+        <form id="contactForm" class="contact-form">
             <div class="form-group">
                 <label for="nombre">Nombre completo</label>
                 <input type="text" id="nombre" name="nombre" required>
@@ -132,7 +158,7 @@
 
             <div class="form-group">
                 <label for="tipo-generador">Tipo de generador</label>
-                <input type="text" id="tipo-generador" name="tipo-generador" placeholder="Marca y modelo si lo conoce">
+                <input type="text" id="tipo-generador" name="tipo_generador" placeholder="Marca y modelo si lo conoce">
             </div>
 
             <div class="form-group">
@@ -143,5 +169,43 @@
             <button type="submit">Enviar mensaje</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                tipo_generador: document.getElementById('tipo-generador').value,
+                mensaje: document.getElementById('mensaje').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('alertSuccess').style.display = 'block';
+                    document.getElementById('alertError').style.display = 'none';
+                    document.getElementById('contactForm').reset();
+                } else {
+                    throw new Error('Error al guardar los datos');
+                }
+            } catch (error) {
+                document.getElementById('alertError').style.display = 'block';
+                document.getElementById('alertSuccess').style.display = 'none';
+                console.error('Error:', error);
+            }
+        });
+    </script>
 </body>
 </html>
