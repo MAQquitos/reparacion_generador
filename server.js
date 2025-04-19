@@ -15,7 +15,7 @@ app.use(express.static(join(__dirname)));
 // Routes
 app.use('/api', contactRoutes);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
