@@ -6,6 +6,7 @@ import contactRoutes from './src/routes/contact.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
+const cors = require('cors');
 
 // Middleware
 app.use(express.json());
