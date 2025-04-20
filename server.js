@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.static(join(__dirname)));
 
 // Routes
-app.use('/api', contactRoutes);
+app.use('/api/contact', contactRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
