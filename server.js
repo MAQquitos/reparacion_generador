@@ -15,6 +15,8 @@ app.use(express.static(join(__dirname)));
 // Routes
 app.use('/api/contact', contactRoutes);
 
+app.get('/', (req, res) => res.send('API funcionando 🚀'));
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
