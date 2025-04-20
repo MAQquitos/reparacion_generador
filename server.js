@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.static(join(__dirname)));
 
 // Routes
-app.use('/api/contact', contactRoutes);
+app.use('/contact', contactRoutes);
 
 app.get('/', (req, res) => res.send('API funcionando 🚀'));
 
